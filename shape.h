@@ -5,9 +5,12 @@
 #include <stdlib.h>
 #include "img.h"
 
-void img_fillCircle(struct color c, double x, double y, double r);
+void img_fillCircle(struct color c, struct point xy, double r);
 
 void backGround(struct color c);
+
+void enemy(struct color c, struct point xy);
+void myUnit(struct color c, struct point xy);
 
 /*
     c: color of bullet
@@ -17,9 +20,10 @@ void backGround(struct color c);
     r: radius of bullets
     theta: 
 */
-void img_spreadCirc(struct color c, double x, double y, double l, int count, double r, double theta);
+void img_spreadCirc(struct color c, struct point xy, double l, int count, double r, double theta);
 
-void img_fillRectangle(struct color c, double x, double y, double w, double h);
+void img_fillRectangle(struct color c, struct point xy, double w, double h);
 
+void shooting(struct color c, Point xy[], int frame, double length);
 #endif
 

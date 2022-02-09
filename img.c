@@ -34,10 +34,10 @@ void img_write(void) {
     fclose(f);
 }
 
-void img_putpixel(struct color c, int x, int y) {
-    if(x < 0 || x >= WIDTH || y < 0 || y >= HEIGHT) return;
-    buf[HEIGHT-y-1][x][0] = c.r;
-    buf[HEIGHT-y-1][x][1] = c.g;
-    buf[HEIGHT-y-1][x][2] = c.b;
+void img_putpixel(struct color c, struct point xy) {
+    if(xy.x < 0 || xy.x >= WIDTH || xy.y < 0 || xy.y >= HEIGHT) return;
+    buf[HEIGHT-(int)xy.y-1][(int)xy.x][0] = c.r;
+    buf[HEIGHT-(int)xy.y-1][(int)xy.x][1] = c.g;
+    buf[HEIGHT-(int)xy.y-1][(int)xy.x][2] = c.b;
 }
 
