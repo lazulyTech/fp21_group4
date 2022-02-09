@@ -9,7 +9,32 @@ void img_fillCircle(struct color c, struct point xy, double r) {
     for(j = jmin; j <= jmax; ++j) {
         for(i = imin; i <= imax; ++i) {
             struct point xy_ = {i, j};
-            if((xy.x-i)*(xy.x-i) + (xy.y-j)*(xy.y-j) < r*r) { img_putpixel(c, xy_); }
+            if((xy.x-i)*(xy.x-i) + (xy.y-j)*(xy.y-j) < r*r) { 
+                img_putpixel(c, xy_); 
+            }
+        }
+    }
+}
+
+void gradationBullet(struct color c, struct point xy, double r){
+    int imin = (int)(xy.x - r - 1), imax = (int)(xy.x + r + 1);
+    int jmin = (int)(xy.y - r - 1), jmax = (int)(xy.y + r + 1);
+    int i, j;
+    for(j = jmin; j <= jmax; ++j) {
+        for(i = imin; i <= imax; ++i) {
+            struct point xy_ = {i, j};
+            double length = (xy.x-i)*(xy.x-i) + (xy.y-j)*(xy.y-j);
+            if(length < r*r/16) {
+                img_putpixel(c, xy_);
+            } else if (length < r*r*25/36) {
+                struct color gradation;
+                gradation.r = 3*(255-c.r) + c.r - 3*(255-c.r)/7;
+                gradation.g = 3*(255-c.g) + c.g - 3*(255-c.g)/7;
+                gradation.b = 3*(255-c.b) + c.b - 3*(255-c.b)/7;
+                img_putpixel(gradation, xy_);
+            } else if (length < r*r) {
+                img_putpixel(white, xy_);
+            }
         }
     }
 }
@@ -24,10 +49,10 @@ void backGround(struct color c){
 }
 
 void enemy(struct color c, struct point xy){
-    
+    img_fillRectangle(c, xy, 10, 10);
 }
 void myUnit(struct color c, struct point xy){
-    
+
 }
 
 void img_spreadCirc(struct color c, struct point xy, double l, int count, double r, double theta){
@@ -36,7 +61,7 @@ void img_spreadCirc(struct color c, struct point xy, double l, int count, double
     for(i = 0; i < count; ++i){
         xy_.x = xy.x + (l * sin(theta*PI/180 + 2*i*PI/count));
         xy_.y = xy.y - (l * cos(theta*PI/180 + 2*i*PI/count));
-        img_fillCircle(c, xy_, r);
+        gradationBullet(c, xy_, r);
     }
 }
 
@@ -58,9 +83,12 @@ void shooting(struct color c, Point xy[], int frame, double length){
     img_fillRectangle(white, xy[frame], 5, 5);
     for (i = 0; i < frame+1; i++) {
         if (i%3 == 0) {
-            xy_.x = xy[i].x;
             xy_.y = xy[i].y + 2*length*(frame - i) + 2;
-            img_fillCircle(c, xy_, 3);
+            int j;
+            for (j = 0; j < 3; j++) {
+                xy_.x = xy[i].x + 10*(j-1);
+                img_fillCircle(c, xy_, 3);
+            }
         }
     }
 }

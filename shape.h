@@ -6,6 +6,7 @@
 #include "img.h"
 
 void img_fillCircle(struct color c, struct point xy, double r);
+void gradationBullet(struct color c, struct point xy, double r);
 
 void backGround(struct color c);
 
