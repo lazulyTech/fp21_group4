@@ -13,3 +13,6 @@ gif: images/*.ppm
 convert: images/*.ppm
 	convert -delay ${ARG} images/img*.ppm out.gif
 
+chmod:
+	chmod 777 *.h *.c
+
