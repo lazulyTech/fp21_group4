@@ -8,7 +8,9 @@
 
 #define WIDTH 600
 #define HEIGHT 400
-#define FRAME 300
+#define FRAME 1300
+#define BULLET_SIZE 4
+
 typedef struct color { 
     unsigned char r, g, b; 
 }Color;

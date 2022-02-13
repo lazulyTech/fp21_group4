@@ -16,7 +16,8 @@ void img_fillCircle(struct color c, struct point xy, double r) {
     }
 }
 
-void gradationBullet(struct color c, struct point xy, double r){
+void gradationBullet(struct color c, struct point xy){
+    double r = BULLET_SIZE;
     int imin = (int)(xy.x - r - 1), imax = (int)(xy.x + r + 1);
     int jmin = (int)(xy.y - r - 1), jmax = (int)(xy.y + r + 1);
     int i, j;
@@ -48,21 +49,13 @@ void backGround(struct color c){
     }
 }
 
-void enemy(struct color c, struct point xy){
-    img_fillRectangle(c, xy, 10, 10);
+void enemyUnit(struct point xy){
+    img_fillCircle(black, xy, 12);
+    img_fillRectangle(green, xy, 10, 10);
 }
-void myUnit(struct color c, struct point xy){
-
-}
-
-void img_spreadCirc(struct color c, struct point xy, double l, int count, double r, double theta){
-    int i;
-    struct point xy_;
-    for(i = 0; i < count; ++i){
-        xy_.x = xy.x + (l * sin(theta*PI/180 + 2*i*PI/count));
-        xy_.y = xy.y - (l * cos(theta*PI/180 + 2*i*PI/count));
-        gradationBullet(c, xy_, r);
-    }
+void myUnit(struct point xy){
+    img_fillRectangle(red, xy, 10, 10);
+    img_fillRectangle(white, xy, 6, 6);
 }
 
 void img_fillRectangle(struct color c, struct point xy, double w, double h){
@@ -77,18 +70,4 @@ void img_fillRectangle(struct color c, struct point xy, double w, double h){
     }
 }
 
-void shooting(struct color c, Point xy[], int frame, double length){
-    int i;
-    struct point xy_;
-    img_fillRectangle(white, xy[frame], 5, 5);
-    for (i = 0; i < frame+1; i++) {
-        if (i%3 == 0) {
-            xy_.y = xy[i].y + 2*length*(frame - i) + 2;
-            int j;
-            for (j = 0; j < 3; j++) {
-                xy_.x = xy[i].x + 10*(j-1);
-                img_fillCircle(c, xy_, 3);
-            }
-        }
-    }
-}
+
